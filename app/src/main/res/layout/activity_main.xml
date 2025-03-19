@@ -8,14 +8,26 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="edu.temple.dicethrow.DieFragment"
+        android:id="@+id/fragmentContainerView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rollDiceButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/fragmentContainerView2"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:name="edu.temple.dicethrow.DieFragment" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rollDiceButton"
+        app:layout_constraintStart_toEndOf="@id/fragmentContainerView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:name="edu.temple.dicethrow.DieFragment" />
 
     <Button
         android:id="@+id/rollDiceButton"

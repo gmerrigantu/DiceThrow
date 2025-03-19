@@ -20,6 +20,14 @@ class DieFragment : Fragment() {
 
     var dieSides: Int = 6
 
+    companion object {
+        fun newInstance(sides: Int): DieFragment {
+            val fragment = DieFragment()
+            fragment.dieSides = sides
+            return fragment
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
