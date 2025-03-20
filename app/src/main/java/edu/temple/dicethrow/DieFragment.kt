@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import kotlin.random.Random
 
 class DieFragment : Fragment() {
@@ -20,6 +21,8 @@ class DieFragment : Fragment() {
 
     var dieSides: Int = 6
 
+    lateinit var dieViewModel: DieViewModel
+
     companion object {
         fun newInstance(sides: Int): DieFragment {
             val fragment = DieFragment()
@@ -30,43 +33,35 @@ class DieFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            it.getInt(DIESIDE).run {
-                dieSides = this
-            }
-        }
+
+        dieViewModel = ViewModelProvider(requireActivity()).get(DieViewModel::class.java)
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_die, container, false).apply {
             dieTextView = findViewById(R.id.dieTextView)
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(PREVIOUS_ROLL, currentRoll)
     }
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
-            throwDie()
-        } else {
-            currentRoll = savedInstanceState.getInt(PREVIOUS_ROLL)
-            dieTextView.text = currentRoll.toString()
+
+
+        dieViewModel.getCurrentRoll().observe(requireActivity()) {
+            dieTextView.text = it.toString()
         }
+
     }
 
     fun throwDie() {
-        currentRoll = Random.nextInt(dieSides) + 1
-        dieTextView.text = currentRoll.toString()
+        dieViewModel.setCurrentRoll(Random.nextInt(1, dieSides + 1))
     }
 
 
