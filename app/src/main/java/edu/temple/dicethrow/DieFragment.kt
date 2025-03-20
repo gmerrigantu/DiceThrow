@@ -34,7 +34,7 @@ class DieFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        dieViewModel = ViewModelProvider(requireActivity()).get(DieViewModel::class.java)
+        dieViewModel = ViewModelProvider(requireActivity())[DieViewModel::class.java]
 
     }
 
@@ -58,11 +58,10 @@ class DieFragment : Fragment() {
             dieTextView.text = it.toString()
         }
 
-    }
+        if (dieViewModel.getCurrentRoll().value == null) {
+            dieViewModel.rollDie()
+        }
 
-    fun throwDie() {
-        dieViewModel.setCurrentRoll(Random.nextInt(1, dieSides + 1))
     }
-
 
 }
